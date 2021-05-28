@@ -24,22 +24,22 @@ namespace JavaModelTools.Tabula
 		public int TexOffY { get; set; }
 
 		[JsonProperty("rotPX")]
-		public double RotPX { get; set; }
+		public double RotationPointX { get; set; }
 
 		[JsonProperty("rotPY")]
-		public double RotPY { get; set; }
+		public double RotationPointY { get; set; }
 
 		[JsonProperty("rotPZ")]
-		public double RotPZ { get; set; }
+		public double RotationPointZ { get; set; }
 
 		[JsonProperty("rotAX")]
-		public double RotAX { get; set; }
+		public double Pitch { get; set; }
 
 		[JsonProperty("rotAY")]
-		public double RotAY { get; set; }
+		public double Yaw { get; set; }
 
 		[JsonProperty("rotAZ")]
-		public double RotAZ { get; set; }
+		public double Roll { get; set; }
 
 		[JsonProperty("mirror")]
 		public bool Mirror { get; set; }
@@ -51,7 +51,7 @@ namespace JavaModelTools.Tabula
 		public List<Box> Boxes { get; set; }
 
 		[JsonProperty("children")]
-		public List<Child> Children { get; set; }
+		public List<Part> Children { get; set; }
 
 		[JsonProperty("identifier")]
 		public string Identifier { get; set; }
