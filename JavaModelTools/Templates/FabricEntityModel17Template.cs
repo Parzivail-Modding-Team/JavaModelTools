@@ -23,7 +23,7 @@ namespace JavaModelTools.Templates
 				return _uniqueNames[part.Identifier];
 
 			var index = 0;
-			string NameAtIndex() => index == 0 ? part.Name : $"{part.Name}{index}";
+			string NameAtIndex() => index == 0 ? part.Name : $"{part.Name}_{index}";
 
 			while (_uniqueNames.ContainsValue(NameAtIndex()))
 				index++;
@@ -51,6 +51,10 @@ namespace JavaModelTools.Templates
 			sb.AppendLine("import net.minecraft.client.render.entity.model.SinglePartEntityModel;");
 			sb.AppendLine("import net.minecraft.entity.Entity;");
 			sb.AppendLine();
+			sb.AppendLine("/**");
+			sb.Append(" * Model: ").AppendLine(_modelData.Name);
+			sb.Append(" * Author: ").AppendLine(_modelData.Author);
+			sb.AppendLine(" */");
 			sb.AppendLine("@Environment(EnvType.CLIENT)");
 			sb.Append("public class ")
 				.Append(context.ClassName)
