@@ -92,7 +92,7 @@ namespace JavaModelTools.Templates
 			 */
 			sb.Append(tab1).Append("public ").Append(context.ClassName).AppendLine("()");
 			sb.Append(tab1).AppendLine("{");
-			sb.Append(tab2).Append("this(").Append(context.ClassName).AppendLine(".getTexturedModelData().createModel());");
+			sb.Append(tab2).Append("this(").AppendLine("getTexturedModelData().createModel());");
 			sb.Append(tab1).AppendLine("}");
 			sb.AppendLine();
 
