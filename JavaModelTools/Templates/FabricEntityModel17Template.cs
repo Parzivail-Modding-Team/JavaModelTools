@@ -197,7 +197,7 @@ namespace JavaModelTools.Templates
 			foreach (var box in part.Boxes)
 			{
 				sb.Append(".uv(")
-					.Append(box.TexOffX).Append(", ").Append(box.TexOffY)
+					.Append(part.U + box.U).Append(", ").Append(part.V + box.V)
 					.Append(')');
 
 				sb.Append(".cuboid(");
@@ -205,12 +205,12 @@ namespace JavaModelTools.Templates
 				if (box.Name != "Box")
 					sb.Append('"').Append(box.Name).Append("\", ");
 
-				sb.Append((float)box.PosX).Append("f, ")
-					.Append((float)box.PosY).Append("f, ")
-					.Append((float)box.PosZ).Append("f, ")
-					.Append(box.DimX).Append(", ")
-					.Append(box.DimY).Append(", ")
-					.Append(box.DimZ)
+				sb.Append((float)box.X).Append("f, ")
+					.Append((float)box.Y).Append("f, ")
+					.Append((float)box.Z).Append("f, ")
+					.Append(box.SizeX).Append(", ")
+					.Append(box.SizeY).Append(", ")
+					.Append(box.SizeZ)
 					.Append(')');
 			}
 

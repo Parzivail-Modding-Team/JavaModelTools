@@ -12,7 +12,7 @@ namespace JavaModelTools.Tabula
 		public int ProjVersion { get; set; }
 
 		[JsonProperty("notes")]
-		public List<object> Notes { get; set; }
+		public List<string> Notes { get; set; }
 
 		[JsonProperty("scaleX")]
 		public double ScaleX { get; set; }

@@ -31,13 +31,20 @@ namespace JavaModelTools
 			var modelJson = modelStream.ReadToEnd();
 
 			var model = JsonConvert.DeserializeObject<TabulaModelData>(modelJson);
+
+			if (model == null)
+			{
+				Console.WriteLine("Failed to deserialize model");
+				return;
+			}
+			
 			var context = new TemplateContext
 			{
-				ClassName = "WorrtEntityModel"
+				ClassName = model.Name
 			};
 			
 			var output = new FabricEntityModel17Template(model).Generate(context);
-			File.WriteAllText($"{context.ClassName}.java", output);
+			File.WriteAllText(Path.Combine(Path.GetDirectoryName(filename), $"{context.ClassName}.java"), output);
 		}
 	}
 }

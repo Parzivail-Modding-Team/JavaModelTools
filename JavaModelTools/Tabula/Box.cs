@@ -5,22 +5,22 @@ namespace JavaModelTools.Tabula
 	public class Box
 	{
 		[JsonProperty("posX")]
-		public double PosX { get; set; }
+		public double X { get; set; }
 
 		[JsonProperty("posY")]
-		public double PosY { get; set; }
+		public double Y { get; set; }
 
 		[JsonProperty("posZ")]
-		public double PosZ { get; set; }
+		public double Z { get; set; }
 
 		[JsonProperty("dimX")]
-		public double DimX { get; set; }
+		public double SizeX { get; set; }
 
 		[JsonProperty("dimY")]
-		public double DimY { get; set; }
+		public double SizeY { get; set; }
 
 		[JsonProperty("dimZ")]
-		public double DimZ { get; set; }
+		public double SizeZ { get; set; }
 
 		[JsonProperty("expandX")]
 		public double ExpandX { get; set; }
@@ -32,10 +32,10 @@ namespace JavaModelTools.Tabula
 		public double ExpandZ { get; set; }
 
 		[JsonProperty("texOffX")]
-		public int TexOffX { get; set; }
+		public int U { get; set; }
 
 		[JsonProperty("texOffY")]
-		public int TexOffY { get; set; }
+		public int V { get; set; }
 
 		[JsonProperty("identifier")]
 		public string Identifier { get; set; }

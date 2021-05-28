@@ -6,7 +6,7 @@ namespace JavaModelTools.Tabula
 	public class Part
 	{
 		[JsonProperty("notes")]
-		public List<object> Notes { get; set; }
+		public List<string> Notes { get; set; }
 
 		[JsonProperty("texWidth")]
 		public int TexWidth { get; set; }
@@ -18,10 +18,10 @@ namespace JavaModelTools.Tabula
 		public bool MatchProject { get; set; }
 
 		[JsonProperty("texOffX")]
-		public int TexOffX { get; set; }
+		public int U { get; set; }
 
 		[JsonProperty("texOffY")]
-		public int TexOffY { get; set; }
+		public int V { get; set; }
 
 		[JsonProperty("rotPX")]
 		public double RotationPointX { get; set; }
