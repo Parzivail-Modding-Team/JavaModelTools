@@ -2,6 +2,7 @@
 {
 	public class TemplateContext
 	{
-		public string ClassName { get; set; }
+		public string FileName { get; set; }
+		public string ModelName { get; set; }
 	}
 }

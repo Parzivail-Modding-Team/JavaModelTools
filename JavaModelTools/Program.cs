@@ -40,11 +40,12 @@ namespace JavaModelTools
 			
 			var context = new TemplateContext
 			{
-				ClassName = model.Name
+				FileName = Path.Combine(Path.GetDirectoryName(filename), model.Name),
+				ModelName = model.Name
 			};
 			
-			var output = new FabricEntityModel17Template(model).Generate(context);
-			File.WriteAllText(Path.Combine(Path.GetDirectoryName(filename), $"{context.ClassName}.java"), output);
+			// new FabricEntityModel17Template(model).Generate(context);
+			new NbtEntityModelTemplate(model).Generate(context);
 		}
 	}
 }

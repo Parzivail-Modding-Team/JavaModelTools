@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using JavaModelTools.Extensions;
@@ -7,33 +8,13 @@ using JavaModelTools.Tabula;
 
 namespace JavaModelTools.Templates
 {
-	public class FabricEntityModel17Template : ITemplate
+	public class FabricEntityModel17Template : Template
 	{
-		private readonly TabulaModelData _modelData;
-		private readonly Dictionary<string, string> _uniqueNames = new();
-
-		public FabricEntityModel17Template(TabulaModelData modelData)
+		public FabricEntityModel17Template(TabulaModelData modelData) : base(modelData)
 		{
-			_modelData = modelData;
 		}
 
-		private string GetUniqueName(Part part)
-		{
-			if (_uniqueNames.ContainsKey(part.Identifier))
-				return _uniqueNames[part.Identifier];
-
-			var index = 0;
-			string NameAtIndex() => index == 0 ? part.Name : $"{part.Name}_{index}";
-
-			while (_uniqueNames.ContainsValue(NameAtIndex()))
-				index++;
-
-			var name = NameAtIndex();
-			_uniqueNames[part.Identifier] = name;
-			return name;
-		}
-
-		public string Generate(TemplateContext context)
+		public override void Generate(TemplateContext context)
 		{
 			var sb = new StringBuilder();
 
@@ -52,12 +33,12 @@ namespace JavaModelTools.Templates
 			sb.AppendLine("import net.minecraft.entity.Entity;");
 			sb.AppendLine();
 			sb.AppendLine("/**");
-			sb.Append(" * Model: ").AppendLine(_modelData.Name);
-			sb.Append(" * Author: ").AppendLine(_modelData.Author);
+			sb.Append(" * Model: ").AppendLine(ModelData.Name);
+			sb.Append(" * Author: ").AppendLine(ModelData.Author);
 			sb.AppendLine(" */");
 			sb.AppendLine("@Environment(EnvType.CLIENT)");
 			sb.Append("public class ")
-				.Append(context.ClassName)
+				.Append(context.ModelName)
 				.AppendLine("<T extends Entity> extends SinglePartEntityModel<T>");
 			sb.AppendLine("{");
 			sb.Append(tab1).AppendLine("private final ModelPart root;");
@@ -66,7 +47,7 @@ namespace JavaModelTools.Templates
 			 * Fields
 			 */
 
-			foreach (var part in _modelData.Parts.Flatten(part => part.Children))
+			foreach (var part in ModelData.Parts.Flatten(part => part.Children))
 				sb.Append(tab1).Append("private final ModelPart ").Append(GetUniqueName(part)).AppendLine(";");
 
 			sb.AppendLine();
@@ -74,13 +55,13 @@ namespace JavaModelTools.Templates
 			/*
 			 * Rooted Constructor
 			 */
-			sb.Append(tab1).Append("public ").Append(context.ClassName).AppendLine("(ModelPart root)");
+			sb.Append(tab1).Append("public ").Append(context.ModelName).AppendLine("(ModelPart root)");
 			sb.Append(tab1).AppendLine("{");
 
 			sb.Append(tab2).AppendLine("this.root = root;");
 			sb.AppendLine();
 
-			foreach (var part in _modelData.Parts)
+			foreach (var part in ModelData.Parts)
 				AppendConstructorPart(sb, tab2, "root", part);
 
 			sb.Append(tab1).AppendLine("}");
@@ -90,7 +71,7 @@ namespace JavaModelTools.Templates
 			/*
 			 * Parameterless constructor
 			 */
-			sb.Append(tab1).Append("public ").Append(context.ClassName).AppendLine("()");
+			sb.Append(tab1).Append("public ").Append(context.ModelName).AppendLine("()");
 			sb.Append(tab1).AppendLine("{");
 			sb.Append(tab2).Append("this(").AppendLine("getTexturedModelData().createModel());");
 			sb.Append(tab1).AppendLine("}");
@@ -106,15 +87,15 @@ namespace JavaModelTools.Templates
 
 			sb.AppendLine();
 
-			foreach (var part in _modelData.Parts)
+			foreach (var part in ModelData.Parts)
 				AppendPart(sb, tab2, "root", part);
 
 			sb.AppendLine();
 
 			sb.Append(tab2)
 				.Append("return TexturedModelData.of(modelData, ")
-				.Append(_modelData.TexWidth).Append(", ")
-				.Append(_modelData.TexHeight).AppendLine(");");
+				.Append(ModelData.TexWidth).Append(", ")
+				.Append(ModelData.TexHeight).AppendLine(");");
 
 			sb.Append(tab1).AppendLine("}");
 
@@ -141,7 +122,7 @@ namespace JavaModelTools.Templates
 
 			sb.AppendLine("}");
 
-			return sb.ToString();
+			File.WriteAllText($"{context.FileName}.java", sb.ToString());
 		}
 
 		private void AppendConstructorPart(StringBuilder sb, string tabs, string parent, Part part)
@@ -212,9 +193,9 @@ namespace JavaModelTools.Templates
 				sb.Append((float)box.X).Append("f, ")
 					.Append((float)box.Y).Append("f, ")
 					.Append((float)box.Z).Append("f, ")
-					.Append(box.SizeX).Append(", ")
-					.Append(box.SizeY).Append(", ")
-					.Append(box.SizeZ)
+					.Append((int)box.SizeX).Append(", ")
+					.Append((int)box.SizeY).Append(", ")
+					.Append((int)box.SizeZ)
 					.Append(')');
 			}
 
