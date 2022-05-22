@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using JavaModelTools.Tabula;
 using Substrate.Nbt;
 
@@ -18,21 +20,40 @@ namespace JavaModelTools.Templates
 			nbt.Root["version"] = new TagNodeInt(ModelData.ProjVersion);
 			nbt.Root["scale"] = new TagNodeCompound
 			{
-				{ "x", new TagNodeDouble(ModelData.ScaleX) },
-				{ "y", new TagNodeDouble(ModelData.ScaleY) },
-				{ "z", new TagNodeDouble(ModelData.ScaleZ) }
+				{ "x", new TagNodeFloat((float)ModelData.ScaleX) },
+				{ "y", new TagNodeFloat((float)ModelData.ScaleY) },
+				{ "z", new TagNodeFloat((float)ModelData.ScaleZ) }
 			};
-			nbt.Root["texture"] = new TagNodeCompound
+			nbt.Root["tex"] = new TagNodeCompound
 			{
 				{ "path", new TagNodeString(ModelData.TextureFile) },
-				{ "w", new TagNodeDouble(ModelData.TexWidth) },
-				{ "h", new TagNodeDouble(ModelData.TexHeight) }
+				{ "w", new TagNodeFloat(ModelData.TexWidth) },
+				{ "h", new TagNodeFloat(ModelData.TexHeight) }
 			};
 
 			var parts = new TagNodeCompound();
 
 			foreach (var part in ModelData.Parts)
 				AppendPart(parts, part);
+
+			const bool addExtraPlayerModelParts = true;
+			if (addExtraPlayerModelParts)
+			{
+				AppendPart(parts, new Part()
+				{
+					Name = "ear",
+					Children = new List<Part>(),
+					Boxes = new List<Box>(),
+					Identifier = "ear"
+				});
+				AppendPart(parts, new Part()
+				{
+					Name = "cloak",
+					Children = new List<Part>(),
+					Boxes = new List<Box>(),
+					Identifier = "cloak"
+				});
+			}
 
 			nbt.Root["parts"] = parts;
 
@@ -48,32 +69,35 @@ namespace JavaModelTools.Templates
 			{
 				["rot"] = new TagNodeCompound
 				{
-					{ "pitch", new TagNodeDouble(part.Pitch) },
-					{ "yaw", new TagNodeDouble(part.Yaw) },
-					{ "roll", new TagNodeDouble(part.Roll) },
+					{ "pitch", new TagNodeFloat((float)(part.Pitch / 180 * Math.PI)) },
+					{ "yaw", new TagNodeFloat((float)(part.Yaw / 180 * Math.PI)) },
+					{ "roll", new TagNodeFloat((float)(part.Roll / 180 * Math.PI)) },
 				},
 				["pos"] = new TagNodeCompound
 				{
-					{ "x", new TagNodeDouble(part.RotationPointX) },
-					{ "y", new TagNodeDouble(part.RotationPointY) },
-					{ "z", new TagNodeDouble(part.RotationPointZ) },
+					{ "x", new TagNodeFloat((float)part.RotationPointX) },
+					{ "y", new TagNodeFloat((float)part.RotationPointY) },
+					{ "z", new TagNodeFloat((float)part.RotationPointZ) },
 				},
 				["tex"] = new TagNodeCompound
 				{
-					{ "w", new TagNodeDouble(part.TexWidth) },
-					{ "h", new TagNodeDouble(part.TexHeight) },
+					{ "w", new TagNodeFloat(part.TexWidth) },
+					{ "h", new TagNodeFloat(part.TexHeight) },
 					{ "u", new TagNodeInt(part.U) },
 					{ "v", new TagNodeInt(part.V) },
 					{ "mirrored", new TagNodeByte(part.Mirror) },
 				}
 			};
 
-			var children = new TagNodeCompound();
+			if (part.Children.Count > 0)
+			{
+				var children = new TagNodeCompound();
 
-			foreach (var child in part.Children)
-				AppendPart(children, child);
+				foreach (var child in part.Children)
+					AppendPart(children, child);
 
-			partTag["children"] = children;
+				partTag["children"] = children;
+			}
 
 			var cuboids = new TagNodeList(TagType.TAG_COMPOUND);
 
@@ -90,15 +114,15 @@ namespace JavaModelTools.Templates
 						},
 					["pos"] = new TagNodeCompound
 					{
-						{ "x", new TagNodeDouble(cube.X) },
-						{ "y", new TagNodeDouble(cube.Y) },
-						{ "z", new TagNodeDouble(cube.Z) },
+						{ "x", new TagNodeFloat((float)cube.X) },
+						{ "y", new TagNodeFloat((float)cube.Y) },
+						{ "z", new TagNodeFloat((float)cube.Z) },
 					},
 					["expand"] = new TagNodeCompound
 					{
-						{ "x", new TagNodeDouble(cube.ExpandX) },
-						{ "y", new TagNodeDouble(cube.ExpandY) },
-						{ "z", new TagNodeDouble(cube.ExpandZ) },
+						{ "x", new TagNodeFloat((float)cube.ExpandX) },
+						{ "y", new TagNodeFloat((float)cube.ExpandY) },
+						{ "z", new TagNodeFloat((float)cube.ExpandZ) },
 					},
 					["tex"] = new TagNodeCompound
 					{

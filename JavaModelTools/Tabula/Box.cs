@@ -1,46 +1,46 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace JavaModelTools.Tabula
 {
 	public class Box
 	{
-		[JsonProperty("posX")]
+		[JsonPropertyName("posX")]
 		public double X { get; set; }
 
-		[JsonProperty("posY")]
+		[JsonPropertyName("posY")]
 		public double Y { get; set; }
 
-		[JsonProperty("posZ")]
+		[JsonPropertyName("posZ")]
 		public double Z { get; set; }
 
-		[JsonProperty("dimX")]
+		[JsonPropertyName("dimX")]
 		public double SizeX { get; set; }
 
-		[JsonProperty("dimY")]
+		[JsonPropertyName("dimY")]
 		public double SizeY { get; set; }
 
-		[JsonProperty("dimZ")]
+		[JsonPropertyName("dimZ")]
 		public double SizeZ { get; set; }
 
-		[JsonProperty("expandX")]
+		[JsonPropertyName("expandX")]
 		public double ExpandX { get; set; }
 
-		[JsonProperty("expandY")]
+		[JsonPropertyName("expandY")]
 		public double ExpandY { get; set; }
 
-		[JsonProperty("expandZ")]
+		[JsonPropertyName("expandZ")]
 		public double ExpandZ { get; set; }
 
-		[JsonProperty("texOffX")]
+		[JsonPropertyName("texOffX")]
 		public int U { get; set; }
 
-		[JsonProperty("texOffY")]
+		[JsonPropertyName("texOffY")]
 		public int V { get; set; }
 
-		[JsonProperty("identifier")]
+		[JsonPropertyName("identifier")]
 		public string Identifier { get; set; }
 
-		[JsonProperty("name")]
+		[JsonPropertyName("name")]
 		public string Name { get; set; }
 	}
 }

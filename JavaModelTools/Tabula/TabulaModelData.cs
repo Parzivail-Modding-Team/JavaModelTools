@@ -1,50 +1,50 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace JavaModelTools.Tabula
 {
 	public class TabulaModelData
 	{
-		[JsonProperty("author")]
+		[JsonPropertyName("author")]
 		public string Author { get; set; }
 
-		[JsonProperty("projVersion")]
+		[JsonPropertyName("projVersion")]
 		public int ProjVersion { get; set; }
 
-		[JsonProperty("notes")]
+		[JsonPropertyName("notes")]
 		public List<string> Notes { get; set; }
 
-		[JsonProperty("scaleX")]
+		[JsonPropertyName("scaleX")]
 		public double ScaleX { get; set; }
 
-		[JsonProperty("scaleY")]
+		[JsonPropertyName("scaleY")]
 		public double ScaleY { get; set; }
 
-		[JsonProperty("scaleZ")]
+		[JsonPropertyName("scaleZ")]
 		public double ScaleZ { get; set; }
 
-		[JsonProperty("texWidth")]
+		[JsonPropertyName("texWidth")]
 		public int TexWidth { get; set; }
 
-		[JsonProperty("texHeight")]
+		[JsonPropertyName("texHeight")]
 		public int TexHeight { get; set; }
 
-		[JsonProperty("textureFile")]
+		[JsonPropertyName("textureFile")]
 		public string TextureFile { get; set; }
 
-		[JsonProperty("textureFileMd5")]
+		[JsonPropertyName("textureFileMd5")]
 		public string TextureFileMd5 { get; set; }
 
-		[JsonProperty("parts")]
+		[JsonPropertyName("parts")]
 		public List<Part> Parts { get; set; }
 
-		[JsonProperty("partCountProjectLife")]
+		[JsonPropertyName("partCountProjectLife")]
 		public int PartCountProjectLife { get; set; }
 
-		[JsonProperty("identifier")]
+		[JsonPropertyName("identifier")]
 		public string Identifier { get; set; }
 
-		[JsonProperty("name")]
+		[JsonPropertyName("name")]
 		public string Name { get; set; }
 	}
 }
